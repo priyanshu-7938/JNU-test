@@ -13,6 +13,8 @@ function App() {
       </div>
       <p className="text-bold">
        yooo hello
+       contract info : https://thirdweb.com/mumbai/0xE22B4a70B089a2e7A92D8F747a0dDA8083fB901f
+       chain id: 137
       </p>
     </>
   )

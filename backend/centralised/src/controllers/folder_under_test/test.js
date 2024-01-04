@@ -14,7 +14,7 @@ async function run() {
     if (res === true) {
         console.log("Verification OK");
     } else {
-        console.log("Invalid proof");
+        console.log("Invalid proof found");
     }
 
 }

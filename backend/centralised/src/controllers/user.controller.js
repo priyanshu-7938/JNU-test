@@ -1,5 +1,8 @@
+import { Proof } from "../models/proof.model.js";
 import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
 
 const registerUser=async (req,res,next)=>{
     try{
@@ -76,5 +79,40 @@ const loginUser=async(req,res,next)=>{
     }
 }
 
+const applyforProof=async(req,res,next)=>{
+    try {
+        const {userId,doc_name}=req.body;
+        const docLocalPath=req.file?.path;
+        console.log(docLocalPath);
+        if(!docLocalPath){
+            throw new ApiError(400,"Document file is missing");
+        }
+        const doc_url=await uploadOnCloudinary(docLocalPath);
+        
+        if(!doc_url){
+            throw new ApiError(400,"Some error occured in document upload");
+        }
+    
+        const proof=await Proof.create({
+            user:userId,
+            document_name:doc_name,
+            picture:doc_url.url,
+        })
+    
+        const createdProof=await Proof.findById(proof._id).select("-proof");
+    
+        if(!createdProof){
+            throw new ApiError(404,"Proof request cannot form");
+        }
+    
+        res.status(201).json({
+            status:"succesfull",
+            data:proof,
+            message:"Proof request created succesfully"
+        })
+    } catch (error) {
+        next(error);
+    }
+}
 
-export{registerUser,loginUser};
+export{registerUser,loginUser,applyforProof};

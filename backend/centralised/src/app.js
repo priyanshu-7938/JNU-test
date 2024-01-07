@@ -16,10 +16,13 @@ app.use(cookieParser());
 
 //router import 
 import userRouter from "./routes/user.routes.js";
+import adminRouter from "./routes/admin.routes.js";
 
 //routes declaration
 app.use("/user",userRouter);
 // http://localhost:8000/user/register
+
+app.use("/admin",adminRouter);
 
 
 export {app};

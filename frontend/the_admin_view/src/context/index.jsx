@@ -4,14 +4,17 @@ import { useState } from "react";
 const Context = createContext();
 export default function ContextProviderAllOver({children}){
 
-    const [ value, setValue ] = useState(0); 
-
-
+    const [ userData, setUserData ] = useState(null);
+    
+    function MessageBar(msg){
+        alert(msg);
+    }
 
     return(
         <Context.Provider value={{
-            value,
-            setValue
+            userData,
+            setUserData,
+            MessageBar,
         }}>
             {children}
         </Context.Provider>

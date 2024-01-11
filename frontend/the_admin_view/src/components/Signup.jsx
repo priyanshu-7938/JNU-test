@@ -31,17 +31,17 @@ export default function Signup(){
     const handelCreation = (status) => {
         switch(status){
             case 201:
-                MessageBar("Account Created SucessFully....");
+                MessageBar("Account Created SucessFully....","success");
                 navigate("/login");
                 break;
             default:
-                MessageBar("Something Went wrong.......");
+                MessageBar("Something Went wrong.......","error");
                 break;
         }
     }
     const HandelSubmit = ()=>{
         if(!(password && username && fullname)){
-            MessageBar("Fill all entries...");
+            MessageBar("Fill all entries...","info");
             return;
         }
         const url = "http://localhost:2024/user/register";

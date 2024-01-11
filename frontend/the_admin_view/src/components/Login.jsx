@@ -22,24 +22,24 @@ export default function Login(){
     const handelCreation = (status) => {
         switch(status){
             case 201:
-                MessageBar("Account Created SucessFully....");
+                MessageBar("Account Created SucessFully....","success");
                 //todo
                 break;
             case 401:
-                MessageBar("Wrong Password....");
+                MessageBar("Wrong Password....","error");
                 break;
             case 404:
-                MessageBar("Invalid username....");
+                MessageBar("Invalid username....","error");
                 break;
             default:
-                MessageBar("Something Went wrong.......");
+                MessageBar("Something Went wrong !!","error");
                 break;
         }
     }
-    console.log(import.meta.env.BASE_URl);
+    // console.log(import.meta.env.BASE_URl);
     const HandelSubmit = ()=>{
         if(!(password && username)){
-            MessageBar("Fill all entries...");
+            MessageBar("Fill all entries...","info");
             return;
         }
         const url = "http://localhost:2024/user/login";
@@ -56,7 +56,7 @@ export default function Login(){
         redirect:'follow'
         })
         .then(res=>{
-            if(res.status == 401 || res.status == 404){
+            if(res.status != 200){
                 handelCreation(res.status);
             }
             return res;
@@ -65,10 +65,11 @@ export default function Login(){
         .then(res=>{
             //res.data is tehe data baby....
             setUserData(res.data.userInfo);
-            navigator("/")
+            navigate("/");
         })
         .catch(error => {
-            console.error('Error:', error);
+            // MessageBar("Error:"+error,"error");
+            // console.error('Error:', error);
         });
     }
 

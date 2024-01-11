@@ -47,6 +47,7 @@ const registerUser=async (req,res,next)=>{
 
 const loginUser=async(req,res,next)=>{
     try{
+        // console.log(req.body);
         const{username,password}=req.body;
         if(!username){
             throw new ApiError(400,"Username is required");
@@ -83,22 +84,26 @@ const applyforProof=async(req,res,next)=>{
     try {
         const {userId,doc_name}=req.body;
         const docLocalPath=req.file?.path;
+        console.log(process.env.CLOUDINARY_CLOUD_NAME);
+
+
         console.log(docLocalPath);
         if(!docLocalPath){
             throw new ApiError(400,"Document file is missing");
         }
+        console.log("1");
         const doc_url=await uploadOnCloudinary(docLocalPath);
-        
+        console.log("2");
         if(!doc_url){
             throw new ApiError(400,"Some error occured in document upload");
         }
-    
+        console.log("3");
         const proof=await Proof.create({
             user:userId,
             document_name:doc_name,
             picture:doc_url.url,
         })
-    
+        console.log("4");
         const createdProof=await Proof.findById(proof._id).select("-proof");
     
         if(!createdProof){

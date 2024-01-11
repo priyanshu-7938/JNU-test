@@ -17,6 +17,7 @@ app.use(cookieParser());
 //router import 
 import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
+import proofVerifiaction from "./routes/proofVerification.js";
 
 //routes declaration
 app.use("/user",userRouter);
@@ -24,5 +25,6 @@ app.use("/user",userRouter);
 
 app.use("/admin",adminRouter);
 
+app.use("/verify",proofVerifiaction);
 
 export {app};

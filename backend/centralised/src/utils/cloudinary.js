@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({
     path:'./.env'
+    
 })
 
 cloudinary.config({ 
@@ -13,6 +14,7 @@ cloudinary.config({
 });
 
 
+  
 const uploadOnCloudinary=async(localFilePath)=>{
     try{
         if(!localFilePath) return null;

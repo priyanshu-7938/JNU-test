@@ -9,8 +9,8 @@ import { Home, GenProof, MyProof  } from "./pages";
 function App() {
 
   return (
-    <div className="bg-[#f7f4d7] h-screen">
-      <div className="w-[70%] flax mx-auto font-montserrat">
+    <div className="bg-[#f7f4d7] flex flex-cl min-h-[100vh]">
+      <div className="w-[70%] mx-auto font-montserrat">
         <Navbar/>
         <Routes>
             <Route path="/" element={<Home />} ></Route>

@@ -36,6 +36,46 @@ const loginUser=async(req,res,next)=>{
         next(error);
     }
 }
+const registerAdmin=async (req,res,next)=>{
+    try{
+        const {username,fullName,password} = req.body;
+        if(
+            [fullName,username,password].some((field)=>field?.trim()==="")
+        ){
+            throw new ApiError(400,"All fields are required",);
+        }
+    
+        const existingUser=await Admin.findOne({username})
+    
+        if(existingUser){
+            throw new ApiError(409,"User with email or username already exists");
+        }
+    
+        //integrate avatar functionality later
+    
+        const user=await Admin.create({
+            fullName,
+            password,
+            username
+        })
+    
+        const createdUser=await Admin.findById(user._id).select(
+            "-password"
+        )
+    
+        if(!createdUser){
+            throw new ApiError(500,"Something went wrong while registering the user");
+        }
+    
+        res.status(201).json({
+            status:"succesfull",
+            data:createdUser,
+            message:"User registered Succesfully"
+        })
+    }catch(error){
+        next(error);
+    }
+}
 const getProofRequests=async(req,res,next)=>{
     try{
         const proof=await Proof.find({status:"pending"});
@@ -73,4 +113,4 @@ const generateProof=async(req,res,next)=>{
     }
 }
 
-export {getProofRequests,generateProof,loginUser};
+export {getProofRequests,generateProof,loginUser,registerAdmin};
